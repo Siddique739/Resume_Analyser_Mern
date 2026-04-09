@@ -35,18 +35,20 @@ exports.addResume = async (req, res) => {
     const response = await cohere.chat({
       model:"command-r-plus-08-2024",
       message: prompt,
-      maxTokens: 100,
+      maxTokens: 400,
       temperature: 0.7,
     })
 
     let result = response.text;
-    // console.log(result)
+    
 
     const match = result.match(/Score:\s*(\d+)/);
     const score = match ? parseInt(match[1],10) : null;
 
     const reasonMatch = result.match(/Reason:\s*([\s\S]*)/)
     const reason = reasonMatch ? reasonMatch[1].trim() : null;
+
+    
 
     const  newResume = new ResumeModel({
       user,
@@ -73,7 +75,21 @@ exports.addResume = async (req, res) => {
 
 exports.getAllResumeForUser = async (req,res)=>{
   try{
+      const {user} = req.params;
+      let resumes = await ResumeModel.find({user:user}).sort({createdAt : -1})
+      return res.status(200).json({message:"Your Previous History",resumes:resumes})
+      
+  }
+  catch(err){
+    console.log(err);
+    return res.status(500).json({error:'Server Error',message:err.message})
+  }
+}
 
+exports.getResumeForAdmin  = async (req,res)=>{
+  try{
+    let resumes = await ResumeModel.find({}).sort({createdAt : -1})
+      return res.status(200).json({message:"Fetched All History",resumes:resumes}) 
   }
   catch(err){
     console.log(err);

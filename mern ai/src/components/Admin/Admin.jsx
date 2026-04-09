@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from './Admin.module.css'
 import { Skeleton, StyledEngineProvider } from '@mui/material'
 import WithAuthHOC from '../../utils/HOC/withAuthHOC'
 const Admin = () => {
+    
+    const [data,setData] =  useState([]);
+    const [loader,setLoader] = useState(false);
+
+
   return (
     <div className={style.Admin}>
       <div className={style.AdminBlock}>

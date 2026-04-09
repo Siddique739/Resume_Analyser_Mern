@@ -5,12 +5,22 @@ import { Dashboard } from '@mui/icons-material';
 import HistoryIcon from '@mui/icons-material/History';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Link,useLocation} from 'react-router-dom';
-
+import { Link,useLocation,useNavigate} from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../utils/AuthContext';
 const SideBar = () => {
 
     const location=useLocation()
-    
+    const navigate = useNavigate();
+    const {isLogin,setLogin,userInfo,setUserInfo} = useContext(AuthContext);
+
+    const handleLogout = ()=>{
+        localStorage.clear();
+        setLogin(false);
+        setUserInfo(null);
+        navigate('/');
+    }
+
   return (
     <div className={style.sideBar}>
         <div className={style.sideBarIcon}>
@@ -31,12 +41,14 @@ const SideBar = () => {
                     <div>History</div>
                 </Link>
 
-                <Link to={'/admin'} className={[style.sideBarOption,location.pathname==='/admin'?style.selectedOption:null].join(' ')}>
+                {
+                    userInfo?.role ==='admin' && <Link to={'/admin'} className={[style.sideBarOption,location.pathname==='/admin'?style.selectedOption:null].join(' ')}>
                     <AdminPanelSettingsIcon sx={{fontSize:22}}/>
                     <div>Admin</div>
                 </Link>
+                }
 
-                <div className={style.sideBarOption}>
+                <div onClick={handleLogout} className={style.sideBarOption}>
                     <LogoutIcon sx={{fontSize:22}}/>
                     <div>Logout</div>
                 </div>

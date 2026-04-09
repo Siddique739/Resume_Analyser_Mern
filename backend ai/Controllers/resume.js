@@ -28,14 +28,14 @@ exports.addResume = async (req, res) => {
 
         Return the score and a brief explanation in this format:
         Score:XX
-        Reason: ...
+        Reason: 7-8 lines only summarizing the match.
 
       `;
 
     const response = await cohere.chat({
       model:"command-r-plus-08-2024",
       message: prompt,
-      maxTokens: 400,
+      maxTokens: 200,
       temperature: 0.7,
     })
 
@@ -88,7 +88,7 @@ exports.getAllResumeForUser = async (req,res)=>{
 
 exports.getResumeForAdmin  = async (req,res)=>{
   try{
-    let resumes = await ResumeModel.find({}).sort({createdAt : -1})
+    let resumes = await ResumeModel.find({}).sort({createdAt : -1}).populate('user')
       return res.status(200).json({message:"Fetched All History",resumes:resumes}) 
   }
   catch(err){

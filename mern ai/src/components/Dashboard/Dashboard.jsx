@@ -88,7 +88,7 @@ const handleUpload = async ()=>{
       <div className={style.DashboardRight}>
         <div className={style.DashboardRightTopCard}>
           <div>Analyze With AI</div>
-          <img className={style.profileImg} src={userInfo?.photoUrl}/>
+          <img className={style.profileImg} src={userInfo?.photoUrl} referrerPolicy="no-referrer" alt={userInfo?.name}/>
           <h2>{userInfo?.name}</h2>
         </div>
 

@@ -53,7 +53,7 @@ const handleUpload = async ()=>{
     <div className={style.Dashboard}>
       <div className={style.DashboardLeft}>
         <div className={style.DashboardHeader}>
-          <div className={style.DashboardHeaderTitle}>Smart Resume Screening</div>
+          <div className={style.DashboardHeaderTitle}>Smart Resume Analyzer</div>
           <div className={style.DashboardHeaderLargeTitle}>Resume Match Score</div>
 
           <div className={style.alertInfo}>
